@@ -1,0 +1,27 @@
+{
+  "name": "Product Creator",
+  "path": "/product-creator",
+  "sections": [
+    {
+      "__resolveType": "site/sections/Chat.tsx",
+      "title": "Product Creator",
+      "icon": "ShoppingBag",
+      "iconColor": "#f91880",
+      "pageTitle": "Start chatting with Product Creator",
+      "pageSubtitle": "Ask questions or get help with your VTEX store",
+      "backUrl": "/",
+      "suggestions": [
+        {
+          "text": "Create a new product listing for me"
+        },
+        {
+          "text": "Help me optimize my product pricing"
+        },
+        {
+          "text": "What information should I include in my product specs?"
+        }
+      ]
+    }
+  ],
+  "__resolveType": "website/pages/Page.tsx"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Content Enricher",
+  "path": "/content-enricher",
+  "sections": [
+    {
+      "__resolveType": "site/sections/Chat.tsx",
+      "title": "Content Enricher",
+      "icon": "ArrowsPointingOut",
+      "iconColor": "#f91880",
+      "pageTitle": "Start chatting with Content Enricher",
+      "pageSubtitle": "Enhance your product descriptions and SEO content",
+      "backUrl": "/",
+      "suggestions": [
+        {
+          "text": "Write an SEO-optimized product description"
+        },
+        {
+          "text": "Suggest improvements for my existing descriptions"
+        },
+        {
+          "text": "Create a content strategy for my new product line"
+        }
+      ]
+    }
+  ],
+  "__resolveType": "website/pages/Page.tsx"
+}

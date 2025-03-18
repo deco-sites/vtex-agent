@@ -1,9 +1,13 @@
-import { App, AppContext as AC } from "deco/mod.ts";
-import website, { Props } from "apps/website/mod.ts";
-
+import { type App, type AppContext as AC } from "@deco/deco";
+import website, { Props as WebsiteProps } from "apps/website/mod.ts";
+import type { Assistant } from "site/sdk/assistants.ts";
 import manifest, { Manifest } from "../manifest.gen.ts";
 
 type WebsiteApp = ReturnType<typeof website>;
+
+interface Props extends WebsiteProps {
+  assistants: Assistant[];
+}
 
 /**
  * @title Site
@@ -11,11 +15,11 @@ type WebsiteApp = ReturnType<typeof website>;
  * @category Tool
  * @logo https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1/0ac02239-61e6-4289-8a36-e78c0975bcc8
  */
-export default function Site(
-  state: Props,
-): App<Manifest, Props, [
+export default function Site(props: Props): App<Manifest, Props, [
   WebsiteApp,
 ]> {
+  const state = props;
+
   return {
     state,
     manifest,

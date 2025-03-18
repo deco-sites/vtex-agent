@@ -27,8 +27,28 @@
     "directives": []
   },
   "__resolveType": "site/apps/site.ts",
-  "firstByteThresholdMS": true,
-  "theme": {
-    "__resolveType": "Neutral"
-  }
+  "firstByteThresholdMS": false,
+  "assistants": [
+    {
+      "title": "Catalog Enricher",
+      "icon": "ShoppingBag",
+      "description": "Enhances product descriptions, generates SEO content, and improves product imagery suggestions.",
+      "buttonText": "Start Assistant",
+      "url": "/content-enricher"
+    },
+    {
+      "title": "Analytics Advisor",
+      "icon": "BarChart3",
+      "description": "Analyzes store performance, sales trends, and provides actionable insights to boost revenue.",
+      "buttonText": "Start Assistant",
+      "url": "/analytics-advisor"
+    },
+    {
+      "title": "Order Manager",
+      "icon": "Package",
+      "description": "Helps track orders, manage fulfillment, and handle customer inquiries about purchases.",
+      "buttonText": "Start Assistant",
+      "url": "/order-manager"
+    }
+  ]
 }

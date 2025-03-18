@@ -68,6 +68,7 @@ server/
 
 import_map.local.json
 deno.lock
+deno.*.tmp
 
 # db files
 .config.json
@@ -76,4 +77,13 @@ _fresh/
 
 # Deco files
 _docker_deps.ts
-.metadata/changeset.json
+.metadata/*
+.deco/metadata/*
+
+# Local env
+.env
+
+# TAilwind file
+static/tailwind.css
+
+.deco/decofile.json

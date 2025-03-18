@@ -1,0 +1,27 @@
+{
+  "name": "Order Manager",
+  "path": "/order-manager",
+  "sections": [
+    {
+      "__resolveType": "site/sections/Chat.tsx",
+      "title": "Order Manager",
+      "icon": "Package",
+      "iconColor": "#f91880",
+      "pageTitle": "Start chatting with Order Manager",
+      "pageSubtitle": "Track orders and manage fulfillment processes",
+      "backUrl": "/",
+      "suggestions": [
+        {
+          "text": "Help me track an order status"
+        },
+        {
+          "text": "What's the best way to handle order fulfillment?"
+        },
+        {
+          "text": "How can I handle customer inquiries about their orders?"
+        }
+      ]
+    }
+  ],
+  "__resolveType": "website/pages/Page.tsx"
+}
