@@ -38,7 +38,9 @@ export type AvailableIcons =
   | "ShoppingBag"
   | "BarChart3"
   | "Package"
-  | "ArrowRight";
+  | "ArrowRight"
+  | "Wrench"
+  | "Check";
 
 interface Props extends JSX.SVGAttributes<SVGSVGElement> {
   /**

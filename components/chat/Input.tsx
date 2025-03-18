@@ -2,7 +2,15 @@ import type { TargetedEvent } from "preact/compat";
 import Icon from "site/components/ui/Icon.tsx";
 import { invoke } from "site/runtime.ts";
 import type { Assistant } from "site/sdk/assistants.ts";
-import { addMessage, isAiThinking, setAiThinking } from "site/sdk/messages.ts";
+import {
+  addTextMessage,
+  addToolMessage,
+  editTextMessage,
+  editToolMessage,
+  isAiThinking,
+  Message,
+  setAiThinking,
+} from "site/sdk/messages.ts";
 
 interface Props {
   placeholder: string;
@@ -24,7 +32,7 @@ export default function Input(
       return;
     }
 
-    addMessage({
+    addTextMessage({
       role: "user",
       content: message,
       username: "You",
@@ -36,7 +44,7 @@ export default function Input(
 
     try {
       const aiResponse = await invoke({
-        key: "site/actions/chat/ai-response.ts",
+        key: "site/actions/chat/stream-ai-response.ts",
         props: {
           assistantUrl: assistant.url,
           message,
@@ -45,14 +53,53 @@ export default function Input(
         },
       });
 
-      addMessage({
-        role: "assistant",
-        content: aiResponse,
-        username: assistant.title,
-      });
+      const newMessages: Message[] = [];
+      let messageId: string | undefined = undefined;
+      let content: undefined | string = undefined;
+
+      for await (const chunk of aiResponse) {
+        if (chunk.type === "text-delta") {
+          if (!messageId) {
+            const message = addTextMessage({
+              role: "assistant",
+              content: chunk.content,
+              username: assistant.title,
+            });
+
+            newMessages.push(message);
+            messageId = message.id;
+            content = chunk.content;
+          } else {
+            content += chunk.content;
+            editTextMessage(messageId, content!);
+          }
+          continue;
+        }
+
+        if (chunk.type === "tool-call") {
+          const message = addToolMessage({
+            toolName: chunk.content,
+          });
+
+          newMessages.push(message);
+          messageId = message.id;
+          content = undefined;
+          continue;
+        }
+
+        if (chunk.type === "tool-result") {
+          if (messageId) {
+            editToolMessage(messageId, false);
+          }
+
+          messageId = undefined;
+          content = undefined;
+          continue;
+        }
+      }
     } catch (error) {
       console.error(error);
-      addMessage({
+      addTextMessage({
         role: "assistant",
         content: "Ocorreu um erro ao responder. Tente novamente mais tarde.",
         username: assistant.title,

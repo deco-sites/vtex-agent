@@ -1,12 +1,23 @@
 import { signal } from "@preact/signals";
 
-export interface Message {
+interface BaseMessage {
   id: string;
+  timestamp: string;
+}
+
+interface ToolMessage extends BaseMessage {
+  role: "tool";
+  toolName: string;
+  isLoading: boolean;
+}
+
+interface TextMessage extends BaseMessage {
   role: "user" | "assistant";
   content: string;
-  timestamp: string;
-  username?: string;
+  username: string;
 }
+
+export type Message = TextMessage | ToolMessage;
 
 export const messages = signal<Message[]>([]);
 export const isAiThinking = signal(false);
@@ -15,18 +26,56 @@ export function setAiThinking(thinking: boolean) {
   isAiThinking.value = thinking;
 }
 
-export function addMessage(message: Omit<Message, "id" | "timestamp">) {
-  messages.value = [
-    ...messages.value,
-    {
-      ...message,
-      id: crypto.randomUUID(),
-      timestamp: new Date().toLocaleTimeString("pt-BR", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    },
-  ];
+export function addToolMessage(
+  message: Omit<ToolMessage, "id" | "timestamp" | "isLoading" | "role">,
+) {
+  const newMessage: ToolMessage = {
+    ...message,
+    role: "tool",
+    id: crypto.randomUUID(),
+    timestamp: new Date().toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    isLoading: true,
+  };
 
-  return messages.value;
+  messages.value = [...messages.value, newMessage];
+
+  return newMessage;
+}
+
+export function editToolMessage(id: string, isLoading: boolean) {
+  messages.value = messages.value.map((message) => {
+    if (message.id === id && message.role === "tool") {
+      return { ...message, isLoading };
+    }
+
+    return message;
+  });
+}
+
+export function addTextMessage(message: Omit<TextMessage, "id" | "timestamp">) {
+  const newMessage: TextMessage = {
+    ...message,
+    id: crypto.randomUUID(),
+    timestamp: new Date().toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+  };
+
+  messages.value = [...messages.value, newMessage];
+
+  return newMessage;
+}
+
+export function editTextMessage(id: string, content: string) {
+  messages.value = messages.value.map((message) => {
+    if (message.id === id) {
+      return { ...message, content };
+    }
+
+    return message;
+  });
 }

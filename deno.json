@@ -28,6 +28,7 @@
     "@std/streams": "jsr:@std/streams@^1.0.0",
     "@std/testing": "jsr:@std/testing@^1.0.0",
     "@zaubrik/djwt": "jsr:@zaubrik/djwt@^3.0.2",
+    "ai": "npm:ai@^4.1.62",
     "fast-json-patch": "npm:fast-json-patch@^3.1.1",
     "partytown/": "https://deno.land/x/partytown@0.4.8/",
     "preact": "npm:preact@10.23.1",

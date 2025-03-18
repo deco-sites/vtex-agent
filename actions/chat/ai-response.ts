@@ -9,9 +9,6 @@ export interface Props {
   resourceId?: string;
 }
 
-/**
- * Handles AI chat responses using Mastra agent
- */
 export default async function aiResponse(
   props: Props,
   _req: Request,
@@ -26,15 +23,15 @@ export default async function aiResponse(
 
   const assistant = getAssistant(assistantUrl, ctx);
   if (!assistant) {
-    return "Assistant not found";
+    throw new Error("Assistant not found");
   }
 
   if (!ctx.mcpServerURL) {
-    return "MCP server URL not found";
+    throw new Error("MCP server URL not found");
   }
 
   if (!assistant.agent) {
-    return "Assistant agent not found";
+    throw new Error("Assistant agent not found");
   }
 
   try {
@@ -42,6 +39,7 @@ export default async function aiResponse(
     const response = await assistant.agent.stream(message, {
       threadId,
       resourceId,
+      // @ts-ignore ignore
       tools: await listMCPTools(ctx.mcpServerURL),
     });
 
@@ -52,6 +50,7 @@ export default async function aiResponse(
           console.error(part.error);
           throw new Error("Failed to process request");
         case "text-delta":
+          console.log("text-delta", part.textDelta);
           fullResponse += part.textDelta;
           break;
         case "tool-call":
