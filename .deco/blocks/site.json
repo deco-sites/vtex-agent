@@ -51,5 +51,9 @@
       "url": "/order-manager"
     }
   ],
-  "mcpServerURL": "https://vtex-mcp.deco.site"
+  "mcpServerURL": "https://vtex-mcp.deco.site",
+  "anthropicApiKey": {
+    "__resolveType": "website/loaders/secret.ts",
+    "name": "ANTHROPIC_API_KEY"
+  }
 }

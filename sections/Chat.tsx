@@ -1,12 +1,11 @@
 import { SectionProps } from "@deco/deco";
-import { useScript } from "@deco/deco/hooks";
+import { useScript, useSection } from "@deco/deco/hooks";
 import { AppContext } from "site/apps/site.ts";
 import {
   Assistant,
   getAssistant,
   previewAssistants,
 } from "site/sdk/assistants.ts";
-import { useComponent } from "site/sections/Component.tsx";
 import Icon from "../components/ui/Icon.tsx";
 
 export interface ChatSuggestion {
@@ -14,6 +13,12 @@ export interface ChatSuggestion {
    * @title Sugestão
    */
   text: string;
+}
+
+interface ChatMessage {
+  content: string;
+  role: "user" | "assistant";
+  timestamp: string;
 }
 
 export interface Props {
@@ -34,19 +39,13 @@ export interface Props {
    * @description Lista de sugestões para iniciar a conversa
    */
   suggestions: ChatSuggestion[];
+  /**
+   * @ignore
+   */
+  messages: ChatMessage[];
 }
 
-export function loader(props: Props, req: Request, ctx: AppContext) {
-  return {
-    ...props,
-    assistant: getAssistant(req.url, ctx) as Assistant,
-    messages: [],
-    threadId: crypto.randomUUID(),
-    resourceId: "default",
-  };
-}
-
-export async function action(props: Props, req: Request, ctx: AppContext) {
+export async function loader(props: Props, req: Request, ctx: AppContext) {
   const assistant = getAssistant(req.url, ctx) as Assistant;
 
   if (req.method === "POST") {
@@ -60,7 +59,7 @@ export async function action(props: Props, req: Request, ctx: AppContext) {
     const resourceId = formData.get("resourceId")?.toString() || "default";
 
     // Add user message
-    const newMessages = [...currentMessages, {
+    const newMessages: ChatMessage[] = [...currentMessages, {
       content: message,
       role: "user",
       timestamp: new Date().toISOString(),
@@ -92,6 +91,9 @@ export async function action(props: Props, req: Request, ctx: AppContext) {
   return {
     ...props,
     assistant,
+    messages: [] as ChatMessage[],
+    threadId: crypto.randomUUID(),
+    resourceId: "default",
   };
 }
 
@@ -172,7 +174,7 @@ export default function Chat({
                   key={index}
                   class="p-4 bg-white border border-gray-200 rounded-lg"
                 >
-                  {message}
+                  {message.content}
                 </div>
               ))}
             </div>
@@ -182,7 +184,9 @@ export default function Chat({
       {/* Footer with Input */}
       <footer class="bg-white border-t border-gray-200 p-4">
         <form
-          hx-post={useComponent(import.meta.url)}
+          hx-post={useSection()}
+          hx-target="closest section"
+          hx-swap="outerHTML"
           id="chat-form"
           class="max-w-4xl mx-auto flex items-center"
         >
@@ -202,6 +206,7 @@ export default function Chat({
             value={resourceId}
           />
           <input
+            name="message"
             id="chat-input"
             type="text"
             placeholder={`Ask ${assistant.title.toLowerCase()} something...`}
