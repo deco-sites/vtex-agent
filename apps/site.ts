@@ -1,6 +1,6 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { type App, type AppContext as AC } from "@deco/deco";
-import { Agent } from "@mastra/core";
+import { Agent } from "@mastra/core/agent";
 import { Secret } from "apps/website/loaders/secret.ts";
 import website, { Props as WebsiteProps } from "apps/website/mod.ts";
 import type { Assistant, AssistantWithAgent } from "site/sdk/assistants.ts";
@@ -9,6 +9,10 @@ import manifest, { Manifest } from "../manifest.gen.ts";
 type WebsiteApp = ReturnType<typeof website>;
 
 interface Props extends WebsiteProps {
+  /**
+   * @title MCP Server URL
+   * @description The URL of the MCP server
+   */
   mcpServerURL?: string;
   assistants: Assistant[];
   anthropicApiKey?: Secret;

@@ -2,13 +2,13 @@
   "seo": {
     "type": "website",
     "jsonLDs": [],
-    "noIndexing": false,
-    "description": "Improve your page performance with deco.cx",
-    "titleTemplate": "%s | deco.cx",
-    "descriptionTemplate": "%s | deco.cx",
-    "title": "Start",
-    "favicon": "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/8/40cc7da0-93d3-4215-9c2a-04b2f86b0a47",
-    "image": "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/8/22c99167-0018-484f-8b0d-4295a7d771f2"
+    "noIndexing": true,
+    "description": "VTEX AI Agents Studio é uma plataforma inovadora da VTEX que permite criar, gerenciar e otimizar agentes de inteligência artificial para atendimento ao cliente e automação de processos. Com integração nativa ao ecossistema VTEX, oferece personalização avançada, aprendizado contínuo e eficiência para e-commerce e varejo digital.",
+    "titleTemplate": "%s",
+    "descriptionTemplate": "%s",
+    "title": "VTEX AI Agent Studio",
+    "favicon": "https://assets.decocache.com/vtex-agent/6c7489f1-af27-4ecd-aa70-3b4987e28d1a/vtex_logo.jpg",
+    "themeColor": "#ff1a67"
   },
   "global": [
     {
@@ -55,5 +55,17 @@
   "anthropicApiKey": {
     "__resolveType": "website/loaders/secret.ts",
     "name": "ANTHROPIC_API_KEY"
+  },
+  "abTesting": {
+    "replaces": [],
+    "includeScriptsToHead": {
+      "includes": []
+    },
+    "includeScriptsToBody": {
+      "includes": []
+    }
+  },
+  "flavor": {
+    "framework": "fresh"
   }
 }

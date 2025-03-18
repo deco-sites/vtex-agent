@@ -2,6 +2,9 @@ import type { AvailableIcons } from "site/components/ui/Icon.tsx";
 import type { AppContext } from "site/apps/site.ts";
 import type { Agent } from "@mastra/core";
 
+/**
+ * @title {{{title}}}
+ */
 export interface Assistant {
   /**
    * @title Título do assistente
