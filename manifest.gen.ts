@@ -2,17 +2,23 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
+import * as $$$$$$$$$0 from "./actions/chat/ai-response.ts";
 import * as $$$$$$$$$$$0 from "./apps/deco/htmx.ts";
 import * as $$$$$$$$$$$1 from "./apps/site.ts";
 import * as $$$$$$0 from "./sections/Chat.tsx";
-import * as $$$$$$1 from "./sections/EcommerceAIAssistant.tsx";
-import * as $$$$$$2 from "./sections/Theme/Theme.tsx";
+import * as $$$$$$1 from "./sections/Component.tsx";
+import * as $$$$$$2 from "./sections/EcommerceAIAssistant.tsx";
+import * as $$$$$$3 from "./sections/Theme/Theme.tsx";
 
 const manifest = {
   "sections": {
     "site/sections/Chat.tsx": $$$$$$0,
-    "site/sections/EcommerceAIAssistant.tsx": $$$$$$1,
-    "site/sections/Theme/Theme.tsx": $$$$$$2,
+    "site/sections/Component.tsx": $$$$$$1,
+    "site/sections/EcommerceAIAssistant.tsx": $$$$$$2,
+    "site/sections/Theme/Theme.tsx": $$$$$$3,
+  },
+  "actions": {
+    "site/actions/chat/ai-response.ts": $$$$$$$$$0,
   },
   "apps": {
     "site/apps/deco/htmx.ts": $$$$$$$$$$$0,

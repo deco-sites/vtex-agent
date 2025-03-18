@@ -1,6 +1,7 @@
-import type { AppContext } from "site/apps/site.ts";
-import Icon from "../components/ui/Icon.tsx";
 import { SectionProps } from "@deco/deco";
+import type { AppContext } from "site/apps/site.ts";
+import { Assistant, previewAssistants } from "site/sdk/assistants.ts";
+import Icon from "../components/ui/Icon.tsx";
 
 interface Props {
   /**
@@ -33,7 +34,7 @@ interface Props {
 export function loader(props: Props, _req: Request, ctx: AppContext) {
   return {
     ...props,
-    assistants: ctx.assistants,
+    assistants: ctx.assistants as Assistant[],
   };
 }
 
@@ -126,29 +127,7 @@ export function Preview() {
   return (
     <EcommerceAIAssistant
       {...defaultProps}
-      assistants={[
-        {
-          title: "Content Enricher",
-          icon: "ArrowsPointingOut",
-          description:
-            "Enhances product descriptions, generates SEO content, and improves product imagery suggestions.",
-          url: "/content-enricher",
-        },
-        {
-          title: "Analytics Advisor",
-          icon: "BarChart3",
-          description:
-            "Analyzes store performance, sales trends, and provides actionable insights to boost revenue.",
-          url: "/analytics-advisor",
-        },
-        {
-          title: "Order Manager",
-          icon: "Package",
-          description:
-            "Helps track orders, manage fulfillment, and handle customer inquiries about purchases.",
-          url: "/order-manager",
-        },
-      ]}
+      assistants={previewAssistants}
     />
   );
 }

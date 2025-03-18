@@ -50,5 +50,6 @@
       "buttonText": "Start Assistant",
       "url": "/order-manager"
     }
-  ]
+  ],
+  "mcpServerURL": "https://vtex-mcp.deco.site"
 }
