@@ -68,7 +68,10 @@ export default function Content({
           </div>
         )
         : (
-          <div id="messages-container" class="w-full max-w-2xl mx-auto mb-8">
+          <div
+            id="messages-container"
+            class="w-full max-w-2xl mx-auto mb-8 space-y-2"
+          >
             {messages.value.map((message) => <Message {...message} />)}
             {isAiThinking.value && (
               <LoadingMessage
