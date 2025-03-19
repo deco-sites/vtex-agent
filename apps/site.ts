@@ -58,6 +58,7 @@ export default function Site(props: Props): App<Manifest, State, [
   const state = { ...props, assistants };
 
   return {
+    // @ts-ignore ignore type error
     state,
     manifest,
     dependencies: [

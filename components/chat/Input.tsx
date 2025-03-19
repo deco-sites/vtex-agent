@@ -8,6 +8,7 @@ import {
   addToolMessage,
   editTextMessage,
   editToolMessage,
+  getRecentThreadMessages,
   isAiThinking,
   Message,
   setAiThinking,
@@ -49,6 +50,8 @@ export default function Input(
     setAiThinking(true);
 
     try {
+      const threadMessages = getRecentThreadMessages();
+
       const aiResponse = await invoke({
         key: "site/actions/chat/stream-ai-response.ts",
         props: {
@@ -56,6 +59,7 @@ export default function Input(
           message,
           threadId,
           resourceId,
+          threadMessages,
         },
       });
 
@@ -119,6 +123,7 @@ export default function Input(
     <form
       onSubmit={handleSubmit}
       id="chat-form"
+      autocomplete="off"
       class="max-w-4xl mx-auto flex items-center"
     >
       <input

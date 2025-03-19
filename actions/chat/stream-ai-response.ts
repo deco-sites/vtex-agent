@@ -1,5 +1,6 @@
 import type { AppContext } from "site/apps/site.ts";
 import { getAssistant } from "site/sdk/assistants.ts";
+import { Message } from "site/sdk/messages.ts";
 import { listMCPTools } from "site/sdk/tools.ts";
 
 export interface Props {
@@ -7,6 +8,7 @@ export interface Props {
   message: string;
   threadId?: string;
   resourceId?: string;
+  threadMessages?: Message[];
 }
 
 interface StreamResponse {
@@ -24,6 +26,7 @@ export default function stream(
     threadId = "default",
     resourceId = "default",
     assistantUrl,
+    threadMessages = [],
   } = props;
 
   const assistant = getAssistant(assistantUrl, ctx);
@@ -39,9 +42,24 @@ export default function stream(
     throw new Error("Assistant agent not found");
   }
 
-  const messageWithContext = `Today is ${new Date().toUTCString()} UTC${
-    ctx.globalContext ? `\n\n${ctx.globalContext}` : ""
-  }\n\n${message}`;
+  const oldMessages = threadMessages
+    .filter((message) => message.role !== "tool")
+    .map((message) =>
+      `[${message.timestamp}] ${message.role}: ${message.content}`
+    ).join("\n\n");
+
+  const messageWithContext = `
+Today is ${new Date().toUTCString()} UTC
+${ctx.globalContext ? `\n\n${ctx.globalContext}` : ""}
+
+<old-messages>
+${oldMessages}
+</old-messages>
+
+<new-message>
+${message}
+</new-message>
+`;
 
   const stream = (async function* () {
     const agentStream = await assistant.agent!.stream(messageWithContext, {

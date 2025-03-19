@@ -27,6 +27,10 @@
     overflow: hidden;
     height: 100vh;
   }
+
+  .markdown code {
+    @apply my-2 rounded-lg bg-[#f91880]/10 border border-[#f91880] block whitespace-pre-wrap p-2;
+  }
 }
 
 @layer utilities {

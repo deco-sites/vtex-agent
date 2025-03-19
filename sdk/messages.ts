@@ -79,3 +79,15 @@ export function editTextMessage(id: string, content: string) {
     return message;
   });
 }
+
+export function getRecentThreadMessages() {
+  const allMessages = messages.peek().filter((message) =>
+    message.role !== "tool"
+  );
+
+  if (allMessages.length >= 2) {
+    return allMessages.slice(-11, -1);
+  }
+
+  return [];
+}

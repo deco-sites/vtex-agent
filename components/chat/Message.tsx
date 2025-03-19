@@ -3,6 +3,12 @@ import Icon from "site/components/ui/Icon.tsx";
 import { clx } from "site/sdk/clx.ts";
 import { Message as Props } from "site/sdk/messages.ts";
 
+marked.use({
+  gfm: true,
+  breaks: true,
+  silent: true,
+});
+
 export default function Message(props: Props) {
   if (props.role === "tool") {
     const { id, isLoading, toolName } = props;
@@ -71,8 +77,9 @@ export default function Message(props: Props) {
             isUser
               ? "bg-[#142032] text-white"
               : "bg-white border border-gray-100 text-[#142032]",
+            "markdown",
           )}
-          dangerouslySetInnerHTML={{ __html: marked(content) }}
+          dangerouslySetInnerHTML={{ __html: marked(content, {}) }}
         />
       </div>
     </div>

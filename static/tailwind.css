@@ -2341,6 +2341,18 @@ input.tab:checked + .tab-content,
   margin-inline-start: -1px;
 }
 /** Prevent scroll when modal is open */
+.markdown code {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  white-space: pre-wrap;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(249 24 128 / var(--tw-border-opacity));
+  background-color: rgb(249 24 128 / 0.1);
+  padding: 0.5rem;
+}
 .sr-only {
   position: absolute;
   width: 1px;
