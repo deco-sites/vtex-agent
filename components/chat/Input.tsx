@@ -33,13 +33,16 @@ export default function Input(
       return;
     }
 
-    console.log("threadId", threadId);
-
     addTextMessage({
       role: "user",
       content: message,
       username: "You",
     });
+
+    const messagesContainer = document.getElementById("messages-container");
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
 
     event.currentTarget.reset();
 

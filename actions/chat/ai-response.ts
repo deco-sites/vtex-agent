@@ -34,9 +34,13 @@ export default async function aiResponse(
     throw new Error("Assistant agent not found");
   }
 
+  const messageWithContext = `Today is ${new Date().toUTCString()} UTC${
+    ctx.globalContext ? `\n\n${ctx.globalContext}` : ""
+  }\n\n${message}`;
+
   try {
     // Use the agent with the available tools, now with thread and resource IDs
-    const response = await assistant.agent.stream(message, {
+    const response = await assistant.agent.stream(messageWithContext, {
       threadId,
       resourceId,
       // @ts-ignore ignore

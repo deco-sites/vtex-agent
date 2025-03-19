@@ -16,6 +16,12 @@ interface Props extends WebsiteProps {
   mcpServerURL?: string;
   assistants: Assistant[];
   anthropicApiKey?: Secret;
+  /**
+   * @title Global Context
+   * @description The global context for the assistants
+   * @format textarea
+   */
+  globalContext?: string;
 }
 
 interface State extends Props {
