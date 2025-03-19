@@ -1,3 +1,4 @@
+import { IS_BROWSER } from "$fresh/runtime.ts";
 import type { TargetedEvent } from "preact/compat";
 import Icon from "site/components/ui/Icon.tsx";
 import { invoke } from "site/runtime.ts";
@@ -31,6 +32,8 @@ export default function Input(
     if (!message) {
       return;
     }
+
+    console.log("threadId", threadId);
 
     addTextMessage({
       role: "user",
@@ -116,7 +119,7 @@ export default function Input(
       class="max-w-4xl mx-auto flex items-center"
     >
       <input
-        disabled={isAiThinking.value}
+        disabled={isAiThinking.value || !IS_BROWSER}
         name="message"
         id="chat-input"
         type="text"
@@ -124,7 +127,7 @@ export default function Input(
         class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f91880] focus:border-transparent disabled:opacity-50"
       />
       <button
-        disabled={isAiThinking.value}
+        disabled={isAiThinking.value || !IS_BROWSER}
         class="ml-2 p-3 bg-[#f91880] text-white rounded-lg hover:bg-[#e0157a] transition-colors disabled:opacity-50"
       >
         <Icon id="ArrowRight" size={20} />

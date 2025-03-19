@@ -39,8 +39,12 @@ export default function stream(
     throw new Error("Assistant agent not found");
   }
 
+  const messageWithContext = `Today is ${
+    new Date().toUTCString()
+  } UTC\n\n${message}`;
+
   const stream = (async function* () {
-    const agentStream = await assistant.agent!.stream(message, {
+    const agentStream = await assistant.agent!.stream(messageWithContext, {
       threadId,
       resourceId,
       // @ts-ignore ignore

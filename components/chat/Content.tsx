@@ -1,4 +1,5 @@
 import { IS_BROWSER } from "$fresh/runtime.ts";
+import { signal } from "@preact/signals";
 import LoadingMessage from "site/components/chat/LoadingMessage.tsx";
 import Message from "site/components/chat/Message.tsx";
 import SuggestionButton from "site/components/chat/SuggestionButton.tsx";
@@ -15,6 +16,8 @@ interface Props {
   suggestions: ChatSuggestion[];
 }
 
+const shouldAutoScroll = signal(true);
+
 export default function Content({
   iconColor,
   assistant,
@@ -23,7 +26,7 @@ export default function Content({
   suggestions,
 }: Props) {
   messages.subscribe(() => {
-    if (IS_BROWSER) {
+    if (IS_BROWSER && shouldAutoScroll.value) {
       const messagesContainer = document.getElementById("messages-container");
       if (messagesContainer) {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -31,9 +34,28 @@ export default function Content({
     }
   });
 
+  if (IS_BROWSER) {
+    const messagesContainer = document.getElementById("messages-container");
+    if (messagesContainer) {
+      // Desativa o auto-scroll quando o usuário rola manualmente
+      messagesContainer.addEventListener("scroll", () => {
+        const isAtBottom =
+          messagesContainer.scrollHeight - messagesContainer.scrollTop <=
+            messagesContainer.clientHeight + 100;
+        shouldAutoScroll.value = isAtBottom;
+      });
+    }
+  }
+
   return (
     <>
-      {!messages.value.length
+      {!IS_BROWSER
+        ? (
+          <div class="max-w-2xl mx-auto mb-8 flex justify-center items-center">
+            <span class="text-[#F71963] loading loading-ring loading-lg" />
+          </div>
+        )
+        : !messages.value.length
         ? (
           <div class="text-center max-w-2xl mx-auto mb-8">
             {/* Avatar */}
@@ -70,7 +92,7 @@ export default function Content({
         : (
           <div
             id="messages-container"
-            class="w-full max-w-2xl mx-auto mb-8 space-y-2"
+            class="w-full max-w-2xl mx-auto space-y-2 overflow-y-auto"
           >
             {messages.value.map((message) => <Message {...message} />)}
             {isAiThinking.value && (
