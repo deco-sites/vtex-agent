@@ -77,7 +77,7 @@ export default function Message(props: Props) {
             isUser
               ? "bg-[#142032] text-white"
               : "bg-white border border-gray-100 text-[#142032]",
-            "markdown",
+            "markdown prose",
           )}
           dangerouslySetInnerHTML={{ __html: marked(content, {}) }}
         />

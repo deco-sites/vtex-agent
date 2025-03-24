@@ -51,13 +51,13 @@ export default function Content({
     <>
       {!IS_BROWSER
         ? (
-          <div class="max-w-2xl mx-auto mb-8 flex justify-center items-center">
+          <div class="max-w-4xl mx-auto px-3 mb-8 flex justify-center items-center">
             <span class="text-[#F71963] loading loading-ring loading-lg" />
           </div>
         )
         : !messages.value.length
         ? (
-          <div class="text-center max-w-2xl mx-auto mb-8">
+          <div class="text-center max-w-4xl mx-auto px-3 mb-8">
             {/* Avatar */}
             <div
               class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -92,7 +92,7 @@ export default function Content({
         : (
           <div
             id="messages-container"
-            class="w-full max-w-2xl mx-auto space-y-2 overflow-y-auto"
+            class="w-full max-w-4xl mx-auto px-3 pb-3 space-y-2 overflow-y-auto"
           >
             {messages.value.map((message) => <Message {...message} />)}
             {isAiThinking.value && (

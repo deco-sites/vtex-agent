@@ -28,6 +28,7 @@
     "@std/semver": "jsr:@std/semver@^0.224.3",
     "@std/streams": "jsr:@std/streams@^1.0.0",
     "@std/testing": "jsr:@std/testing@^1.0.0",
+    "@tailwindcss/typography": "npm:@tailwindcss/typography@^0.5.16",
     "@zaubrik/djwt": "jsr:@zaubrik/djwt@^3.0.2",
     "ai": "npm:ai@^4.1.62",
     "fast-json-patch": "npm:fast-json-patch@^3.1.1",

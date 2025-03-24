@@ -1,7 +1,8 @@
+import typography from "@tailwindcss/typography";
 import daisyui from "daisyui";
 
 export default {
-  plugins: [daisyui],
+  plugins: [daisyui, typography()],
   daisyui: { themes: [], logs: false },
   content: ["./**/*.tsx"],
   theme: { container: { center: true } },

@@ -47,7 +47,11 @@ export interface Props {
 }
 
 export function loader(props: Props, req: Request, ctx: AppContext) {
-  const assistant = getAssistant(req.url, ctx) as Assistant;
+  const {
+    // @ts-ignore ignore
+    agent: _agent,
+    ...assistant
+  } = getAssistant(req.url, ctx) as Assistant;
 
   return {
     ...props,
@@ -92,7 +96,7 @@ export default function Chat({
       {/* Main Content */}
       <main
         id="container"
-        class="flex-grow flex flex-col items-center p-4 h-fit overflow-y-auto"
+        class="flex-grow flex flex-col items-center p-4 pb-0 h-fit overflow-y-auto"
       >
         <Content
           iconColor={iconColor}

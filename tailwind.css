@@ -29,7 +29,7 @@
   }
 
   .markdown code {
-    @apply my-2 rounded-lg bg-[#f91880]/10 border border-[#f91880] block whitespace-pre-wrap p-2;
+    @apply my-2 !rounded-lg bg-[#f91880]/10 border border-[#f91880] block whitespace-pre-wrap !p-2;
   }
 }
 
