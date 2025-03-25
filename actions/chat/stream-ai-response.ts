@@ -59,15 +59,18 @@ ${oldMessages}
 <new-message>
 ${message}
 </new-message>
-`;
+`.slice(0, 200000); // anthropic max tokens
 
   const stream = (async function* () {
-    const agentStream = await assistant.agent!.stream(messageWithContext, {
-      threadId,
-      resourceId,
-      // @ts-ignore ignore
-      tools: await listMCPTools(ctx.mcpServerURL!),
-    });
+    const agentStream = await assistant.agent!.stream(
+      messageWithContext,
+      {
+        threadId,
+        resourceId,
+        // @ts-ignore ignore
+        tools: await listMCPTools(ctx.mcpServerURL!),
+      },
+    );
 
     for await (const part of agentStream.fullStream) {
       if (part.type === "text-delta") {
