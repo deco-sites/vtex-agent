@@ -21,9 +21,12 @@ interface Props {
   resourceId: string;
 }
 
-export default function Input(
-  { placeholder, assistant, threadId, resourceId }: Props,
-) {
+export default function Input({
+  placeholder,
+  assistant,
+  threadId,
+  resourceId,
+}: Props) {
   async function handleSubmit(event: TargetedEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -124,7 +127,7 @@ export default function Input(
       onSubmit={handleSubmit}
       id="chat-form"
       autocomplete="off"
-      class="max-w-4xl mx-auto flex items-center"
+      class="bg-neutral-lightest rounded-2xl border border-neutral-light max-w-[800px] w-full flex items-center gap-2 p-2"
     >
       <input
         disabled={isAiThinking.value || !IS_BROWSER}
@@ -132,11 +135,11 @@ export default function Input(
         id="chat-input"
         type="text"
         placeholder={placeholder}
-        class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f91880] focus:border-transparent disabled:opacity-50"
+        class="p-3 focus:outline-none w-full border-none disabled:opacity-50 placeholder:text-neutral-dark placeholder:text-sm bg-transparent"
       />
       <button
         disabled={isAiThinking.value || !IS_BROWSER}
-        class="ml-2 p-3 bg-[#f91880] text-white rounded-lg hover:bg-[#e0157a] transition-colors disabled:opacity-50"
+        class="ml-2 p-3 bg-primary text-primary-lightest rounded-full hover:bg-primary-dark transition-colors disabled:opacity-50"
       >
         <Icon id="ArrowRight" size={20} />
       </button>

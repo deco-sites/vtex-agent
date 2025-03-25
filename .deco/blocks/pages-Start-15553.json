@@ -3,7 +3,7 @@
   "path": "/",
   "sections": [
     {
-      "__resolveType": "site/sections/EcommerceAIAssistant.tsx",
+      "__resolveType": "site/sections/Home.tsx",
       "mainTitle": "VTEX AI Agents Studio",
       "mainSubtitle": "Intelligent assistance for your e-commerce business",
       "sectionTitle": "Select an Agent",

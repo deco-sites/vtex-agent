@@ -5,6 +5,7 @@
 @layer base {
   /* Allow changing font family via CMS */
   html {
+    --font-family: "VTEX Trust", sans-serif;
     font-family: var(--font-family);
   }
 

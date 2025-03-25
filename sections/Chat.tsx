@@ -2,6 +2,7 @@ import { SectionProps } from "@deco/deco";
 import { AppContext } from "site/apps/site.ts";
 import Content from "site/components/chat/Content.tsx";
 import Input from "site/components/chat/Input.tsx";
+import Sidebar from "site/components/home/Sidebar.tsx";
 import {
   type Assistant,
   getAssistant,
@@ -14,12 +15,6 @@ export interface ChatSuggestion {
    * @title Sugestão
    */
   text: string;
-}
-
-interface ChatMessage {
-  content: string;
-  role: "user" | "assistant";
-  timestamp: string;
 }
 
 export interface Props {
@@ -40,10 +35,6 @@ export interface Props {
    * @description Lista de sugestões para iniciar a conversa
    */
   suggestions: ChatSuggestion[];
-  /**
-   * @ignore
-   */
-  messages: ChatMessage[];
 }
 
 export function loader(props: Props, req: Request, ctx: AppContext) {
@@ -56,7 +47,6 @@ export function loader(props: Props, req: Request, ctx: AppContext) {
   return {
     ...props,
     assistant,
-    messages: [] as ChatMessage[],
     threadId: crypto.randomUUID(),
     resourceId: "default",
   };
@@ -76,46 +66,52 @@ export default function Chat({
   }
 
   return (
-    <div class="h-screen overflow-hidden flex flex-col bg-gray-50">
-      {/* Header */}
-      <header class="bg-[#121c2e] text-white p-4 flex items-center">
-        <a href="/" class="mr-4">
-          <Icon id="ChevronLeft" strokeWidth={2} size={24} />
-        </a>
-        <div class="flex items-center">
-          <div
-            class="w-10 h-10 rounded-full flex items-center justify-center mr-3"
-            style={{ backgroundColor: iconColor }}
-          >
-            <Icon id={assistant.icon} size={20} class="text-white" />
-          </div>
-          <h1 class="text-xl font-bold">{assistant.title}</h1>
-        </div>
-      </header>
+    <div
+      class="min-h-screen flex bg-white"
+      style={{
+        backgroundImage: "url(/background-gradient.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Sidebar */}
+      <Sidebar />
 
       {/* Main Content */}
-      <main
-        id="container"
-        class="flex-grow flex flex-col items-center p-4 pb-0 h-fit overflow-y-auto"
-      >
-        <Content
-          iconColor={iconColor}
-          assistant={assistant}
-          pageTitle={pageTitle}
-          pageSubtitle={pageSubtitle}
-          suggestions={suggestions}
-        />
-      </main>
+      <div class="px-4 w-full">
+        <header class="flex items-center gap-3 h-[52px] px-4">
+          <span class="size-8 flex justify-center items-center rounded-xl bg-gradient-to-t from-primary-dark to-primary-light p-0.5">
+            <span class="size-full flex justify-center items-center rounded-[10px] bg-primary">
+              <Icon
+                id={assistant.icon}
+                class="text-primary-lightest"
+                size={16}
+              />
+            </span>
+          </span>
+          <p class="text-neutral-dark text-sm">{assistant.title}</p>
+        </header>
 
-      {/* Footer with Input */}
-      <footer class="bg-white border-t border-gray-200 p-4">
-        <Input
-          placeholder={`Ask ${assistant.title.toLowerCase()} something...`}
-          assistant={assistant}
-          threadId={threadId}
-          resourceId={resourceId}
-        />
-      </footer>
+        {/* Main Content Area */}
+        <main class="flex flex-col items-center gap-4 w-full h-[calc(100vh-52px)]">
+          <Content
+            iconColor={iconColor}
+            assistant={assistant}
+            pageTitle={pageTitle}
+            pageSubtitle={pageSubtitle}
+            suggestions={suggestions}
+          />
+          <div class="mt-auto pb-4 w-full flex justify-center">
+            <Input
+              placeholder="Type your message here..."
+              assistant={assistant}
+              threadId={threadId}
+              resourceId={resourceId}
+            />
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
@@ -123,7 +119,6 @@ export default function Chat({
 export function Preview() {
   return (
     <Chat
-      messages={[]}
       threadId={crypto.randomUUID()}
       resourceId="default"
       assistant={previewAssistants[0]}

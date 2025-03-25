@@ -20,18 +20,18 @@ export default function Message(props: Props) {
           <div
             class={clx(
               "max-w-[80%] md:max-w-[70%] rounded-lg p-2 text-sm",
-              "bg-white border border-gray-100 text-[#142032]",
+              "bg-white border border-gray-100 text-neutral-darkest",
               "flex items-center gap-3",
             )}
           >
             Chamada de ferramenta:{" "}
-            <span class="rounded border border-[#F71963] px-2 bg-[#F71963]/10">
+            <span class="rounded border border-primary px-2 bg-primary/10">
               {toolName}
             </span>{" "}
             {isLoading ? <span class="loading loading-xs" /> : (
               <Icon
                 id="Check"
-                class="text-[#F71963]"
+                class="text-primary"
                 size={16}
                 strokeWidth={2}
               />
@@ -57,7 +57,7 @@ export default function Message(props: Props) {
         <span
           class={clx(
             "text-xs font-medium",
-            isUser ? "text-[#142032]" : "text-[#F71963]",
+            isUser ? "text-neutral-darkest" : "text-primary",
           )}
         >
           {username} • {timestamp}
@@ -75,8 +75,8 @@ export default function Message(props: Props) {
           class={clx(
             "max-w-[80%] md:max-w-[70%] rounded-lg p-4",
             isUser
-              ? "bg-[#142032] text-white"
-              : "bg-white border border-gray-100 text-[#142032]",
+              ? "bg-neutral-darkest text-white"
+              : "bg-white border border-gray-100 text-neutral-darkest",
             "markdown prose",
           )}
           dangerouslySetInnerHTML={{ __html: marked(content, {}) }}

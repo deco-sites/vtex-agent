@@ -2,7 +2,6 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 import { signal } from "@preact/signals";
 import LoadingMessage from "site/components/chat/LoadingMessage.tsx";
 import Message from "site/components/chat/Message.tsx";
-import SuggestionButton from "site/components/chat/SuggestionButton.tsx";
 import Icon from "site/components/ui/Icon.tsx";
 import type { Assistant } from "site/sdk/assistants.ts";
 import { isAiThinking, messages } from "site/sdk/messages.ts";
@@ -19,11 +18,7 @@ interface Props {
 const shouldAutoScroll = signal(true);
 
 export default function Content({
-  iconColor,
   assistant,
-  pageTitle,
-  pageSubtitle,
-  suggestions,
 }: Props) {
   messages.subscribe(() => {
     if (IS_BROWSER && shouldAutoScroll.value) {
@@ -52,42 +47,30 @@ export default function Content({
       {!IS_BROWSER
         ? (
           <div class="max-w-4xl mx-auto px-3 mb-8 flex justify-center items-center">
-            <span class="text-[#F71963] loading loading-ring loading-lg" />
+            <span class="text-primary loading loading-ring loading-lg" />
           </div>
         )
         : !messages.value.length
         ? (
-          <div class="text-center max-w-4xl mx-auto px-3 mb-8">
-            {/* Avatar */}
-            <div
-              class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-              style={{ backgroundColor: iconColor }}
-            >
-              <Icon id={assistant.icon} size={32} class="text-white" />
-            </div>
-
-            {/* Title and Subtitle */}
-            <h2 class="text-2xl font-bold mb-2">{pageTitle}</h2>
-            <p class="text-gray-600 mb-8">{pageSubtitle}</p>
-
-            {/* Suggestions */}
-            <div class="space-y-2 w-full max-w-lg mx-auto">
-              {suggestions.map((suggestion, index) => (
-                <SuggestionButton
-                  key={index}
-                  text={suggestion.text}
-                  onClick={() => {
-                    const input = document.getElementById(
-                      "chat-input",
-                    ) as HTMLInputElement;
-                    if (input) {
-                      input.value = suggestion.text;
-                    }
-                  }}
+          <>
+            <span class="size-12 flex justify-center items-center rounded-xl bg-gradient-to-t from-primary-dark to-primary-light p-0.5">
+              <span class="size-full flex justify-center items-center rounded-[10px] bg-primary">
+                <Icon
+                  id={assistant.icon}
+                  class="text-primary-lightest"
+                  size={28}
                 />
-              ))}
+              </span>
+            </span>
+            <div class="text-center">
+              <h1 class="text-neutral-darkest text-2xl">
+                Start chatting with {assistant.title}
+              </h1>
+              <p class="text-neutral-dark text-base">
+                {assistant.description}
+              </p>
             </div>
-          </div>
+          </>
         )
         : (
           <div
