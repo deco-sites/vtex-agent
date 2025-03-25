@@ -51,7 +51,7 @@ export default function Sidebar() {
           </span>
         </a>
         <a
-          href="/package-manager"
+          href="/order-manager"
           class="size-9 flex justify-center items-center"
         >
           <span class="flex justify-center items-center size-6 rounded-[9px] p-px bg-gradient-to-t from-primary-dark to-primary-light">
