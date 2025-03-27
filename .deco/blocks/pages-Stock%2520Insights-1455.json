@@ -1,0 +1,27 @@
+{
+  "name": "Stock Insights",
+  "path": "/stock-insights",
+  "sections": [
+    {
+      "__resolveType": "site/sections/Chat.tsx",
+      "title": "Analytics Advisor",
+      "icon": "BarChart3",
+      "iconColor": "#f91880",
+      "pageTitle": "Start chatting with Analytics Advisor",
+      "pageSubtitle": "Analyze store performance and get actionable insights",
+      "backUrl": "/",
+      "suggestions": [
+        {
+          "text": "Analyze store performance and sales trends"
+        },
+        {
+          "text": "What are the key metrics I should be monitoring?"
+        },
+        {
+          "text": "How can I improve my conversion rate?"
+        }
+      ]
+    }
+  ],
+  "__resolveType": "website/pages/Page.tsx"
+}
