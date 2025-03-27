@@ -42,7 +42,8 @@ export type AvailableIcons =
   | "Wrench"
   | "Check"
   | "Home"
-  | "vtex-ai-agent-studio";
+  | "vtex-ai-agent-studio"
+  | "cart-package";
 
 interface Props extends JSX.SVGAttributes<SVGSVGElement> {
   /**
