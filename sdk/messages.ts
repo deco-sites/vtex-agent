@@ -5,13 +5,13 @@ interface BaseMessage {
   timestamp: string;
 }
 
-interface ToolMessage extends BaseMessage {
+export interface ToolMessage extends BaseMessage {
   role: "tool";
   toolName: string;
   isLoading: boolean;
 }
 
-interface TextMessage extends BaseMessage {
+export interface TextMessage extends BaseMessage {
   role: "user" | "assistant";
   content: string;
   username: string;

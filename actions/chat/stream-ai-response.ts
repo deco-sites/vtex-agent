@@ -1,6 +1,7 @@
+import { logger } from "@deco/deco/o11y";
 import type { AppContext } from "site/apps/site.ts";
 import { getAssistant } from "site/sdk/assistants.ts";
-import { Message } from "site/sdk/messages.ts";
+import type { Message, TextMessage } from "site/sdk/messages.ts";
 import { listMCPTools } from "site/sdk/tools.ts";
 
 export interface Props {
@@ -31,26 +32,28 @@ export default function stream(
 
   const assistant = getAssistant(assistantUrl, ctx);
   if (!assistant) {
+    logger.error("Assistant not found", props);
     throw new Error("Assistant not found");
   }
 
   if (!ctx.mcpServerURL) {
+    logger.error("MCP server URL not found", props);
     throw new Error("MCP server URL not found");
   }
 
   if (!assistant.agent) {
+    logger.error("Assistant agent not found", props);
     throw new Error("Assistant agent not found");
   }
 
   const oldMessages = threadMessages
-    .filter((message) => message.role !== "tool")
+    .filter((message): message is TextMessage => message.role !== "tool")
     .map((message) =>
       `[${message.timestamp}] ${message.role}: ${message.content}`
     ).join("\n\n");
 
   const messageWithContext = `
 Today is ${new Date().toUTCString()} UTC
-${ctx.globalContext ? `\n\n${ctx.globalContext}` : ""}
 
 <old-messages>
 ${oldMessages}
@@ -67,6 +70,11 @@ ${message}
       {
         threadId,
         resourceId,
+        maxSteps: 10,
+        system: ctx.globalContext,
+        onError: ({ error }) => {
+          logger.error(`Error streaming AI response: ${message}`, { error });
+        },
         // @ts-ignore ignore
         tools: await listMCPTools(ctx.mcpServerURL!),
       },
