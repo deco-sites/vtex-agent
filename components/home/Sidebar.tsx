@@ -37,6 +37,7 @@ export default function Sidebar(props: Props) {
             <span class="flex justify-center items-center size-6 rounded-[9px] p-px bg-gradient-to-t from-primary-dark to-primary-light">
               <span class="flex justify-center items-center size-full rounded-lg bg-primary">
                 <Icon
+                  strokeWidth={1}
                   id={assistant.icon}
                   class="text-primary-lightest"
                   size={14}

@@ -22,6 +22,7 @@ export default function AssistantCard({
         <div class="size-16 rounded-2xl p-0.5 bg-gradient-to-t from-primary-dark to bg-primary-light flex items-center justify-center mb-4">
           <div class="size-full rounded-[14px] bg-primary flex justify-center items-center">
             <Icon
+              strokeWidth={1}
               id={icon}
               class="text-primary-lightest"
               size={36}

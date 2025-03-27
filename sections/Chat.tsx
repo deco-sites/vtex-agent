@@ -88,6 +88,7 @@ export default function Chat({
           <span class="size-8 flex justify-center items-center rounded-xl bg-gradient-to-t from-primary-dark to-primary-light p-0.5">
             <span class="size-full flex justify-center items-center rounded-[10px] bg-primary">
               <Icon
+                strokeWidth={1}
                 id={assistant.icon}
                 class="text-primary-lightest"
                 size={16}
