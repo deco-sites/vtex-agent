@@ -1,6 +1,13 @@
 import Icon from "site/components/ui/Icon.tsx";
+import { Assistant } from "site/sdk/assistants.ts";
 
-export default function Sidebar() {
+interface Props {
+  assistants: Assistant[];
+}
+
+export default function Sidebar(props: Props) {
+  const { assistants } = props;
+
   return (
     <div class="w-14 bg-white flex flex-col items-center p-2">
       <div class="mb-2">
@@ -22,48 +29,22 @@ export default function Sidebar() {
           />
         </a>
         <div class="w-8 h-px bg-neutral-light my-2" />
-        <a
-          href="/content-enricher"
-          class="size-9 flex justify-center items-center"
-        >
-          <span class="flex justify-center items-center size-6 rounded-[9px] p-px bg-gradient-to-t from-primary-dark to-primary-light">
-            <span class="flex justify-center items-center size-full rounded-lg bg-primary">
-              <Icon
-                id="ShoppingBag"
-                class="text-primary-lightest"
-                size={14}
-              />
+        {assistants.map((assistant) => (
+          <a
+            href={assistant.url}
+            class="size-9 flex justify-center items-center"
+          >
+            <span class="flex justify-center items-center size-6 rounded-[9px] p-px bg-gradient-to-t from-primary-dark to-primary-light">
+              <span class="flex justify-center items-center size-full rounded-lg bg-primary">
+                <Icon
+                  id={assistant.icon}
+                  class="text-primary-lightest"
+                  size={14}
+                />
+              </span>
             </span>
-          </span>
-        </a>
-        <a
-          href="/analytics-advisor"
-          class="size-9 flex justify-center items-center"
-        >
-          <span class="flex justify-center items-center size-6 rounded-[9px] p-px bg-gradient-to-t from-primary-dark to-primary-light">
-            <span class="flex justify-center items-center size-full rounded-lg bg-primary">
-              <Icon
-                id="BarChart3"
-                class="text-primary-lightest"
-                size={14}
-              />
-            </span>
-          </span>
-        </a>
-        <a
-          href="/order-manager"
-          class="size-9 flex justify-center items-center"
-        >
-          <span class="flex justify-center items-center size-6 rounded-[9px] p-px bg-gradient-to-t from-primary-dark to-primary-light">
-            <span class="flex justify-center items-center size-full rounded-lg bg-primary">
-              <Icon
-                id="Package"
-                class="text-primary-lightest"
-                size={14}
-              />
-            </span>
-          </span>
-        </a>
+          </a>
+        ))}
       </nav>
     </div>
   );

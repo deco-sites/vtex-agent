@@ -47,6 +47,9 @@ export function loader(props: Props, req: Request, ctx: AppContext) {
   return {
     ...props,
     assistant,
+    assistants: ctx.assistants.map(({ agent: _agent, ...assistant }) =>
+      assistant
+    ) as Assistant[],
     threadId: crypto.randomUUID(),
     resourceId: "default",
   };
@@ -60,6 +63,7 @@ export default function Chat({
   assistant,
   threadId,
   resourceId,
+  assistants,
 }: SectionProps<typeof loader>) {
   if (!assistant) {
     return <div>Assistant not found</div>;
@@ -76,7 +80,7 @@ export default function Chat({
       }}
     >
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar assistants={assistants} />
 
       {/* Main Content */}
       <div class="px-4 w-full">
@@ -119,6 +123,7 @@ export default function Chat({
 export function Preview() {
   return (
     <Chat
+      assistants={previewAssistants}
       threadId={crypto.randomUUID()}
       resourceId="default"
       assistant={previewAssistants[0]}

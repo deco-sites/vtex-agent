@@ -56,7 +56,7 @@ export default function Home(
       }}
     >
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar assistants={assistants} />
 
       {/* Main Content */}
       <div class="px-4 pt-16">
