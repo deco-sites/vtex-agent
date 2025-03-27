@@ -25,6 +25,10 @@ export const listMCPTools = async (
 
   const createdTools: Record<string, ReturnType<typeof createTool>> = {};
   for (const tool of tools) {
+    if (tool.name.includes("website")) {
+      continue;
+    }
+
     try {
       const createdTool = createTool({
         id: tool.name,
@@ -49,8 +53,15 @@ export const listMCPTools = async (
                 "content-type": "application/json",
               },
             },
-          );
-          return await response.json();
+          )
+            .then((res) => res.json())
+            .catch((err) => {
+              console.error(err);
+              return {
+                error: err.message,
+              };
+            });
+          return response;
         },
       });
 

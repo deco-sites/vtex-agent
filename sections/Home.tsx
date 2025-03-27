@@ -43,7 +43,7 @@ export function loader(props: Props, _req: Request, ctx: AppContext) {
 export default function Home(
   props: SectionProps<typeof loader>,
 ) {
-  const { mainSubtitle } = props || defaultProps;
+  const { mainSubtitle, assistants } = props || defaultProps;
 
   return (
     <div
@@ -81,28 +81,14 @@ export default function Home(
           {/* Agent Cards */}
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Catalog Enricher */}
-            <AssistantCard
-              icon="ShoppingBag"
-              title="Catalog Enricher"
-              description="Enhances product descriptions, generates SEO content, and improves product imagery suggestions."
-              url="/content-enricher"
-            />
-
-            {/* Analytics Advisor */}
-            <AssistantCard
-              icon="BarChart3"
-              title="Analytics Advisor"
-              description="Analyzes store performance, sales trends, and provides actionable insights to boost revenue."
-              url="/analytics-advisor"
-            />
-
-            {/* Order Manager */}
-            <AssistantCard
-              icon="Package"
-              title="Order Manager"
-              description="Helps track orders, manage fulfillment, and handle customer inquiries about purchases."
-              url="/order-manager"
-            />
+            {assistants.map((assistant) => (
+              <AssistantCard
+                icon={assistant.icon}
+                title={assistant.title}
+                description={assistant.description}
+                url={assistant.url}
+              />
+            ))}
           </div>
         </main>
       </div>
