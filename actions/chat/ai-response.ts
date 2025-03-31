@@ -26,10 +26,9 @@ export default async function aiResponse(
     threadMessages = [],
   } = props;
 
-  const assistant = getAssistant(assistantUrl, ctx);
+  let assistant = getAssistant(assistantUrl, ctx);
   if (!assistant) {
-    logger.error("Assistant not found", props);
-    throw new Error("Assistant not found");
+    assistant = getAssistant("/content-enricher", ctx);
   }
 
   if (!ctx.mcpServerURL) {
