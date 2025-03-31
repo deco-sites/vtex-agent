@@ -2,6 +2,8 @@ import { Schemas } from "@deco/deco";
 import { getTools } from "@deco/mcp";
 import { createTool } from "@mastra/core/tools";
 import { jsonSchemaToModel } from "@mastra/core/utils";
+import { z } from "npm:zod@3.24.2";
+import { accounts } from "site/sdk/account.ts";
 
 export const fetchMeta = async (baseUrl: string) => {
   const response = await fetch(new URL("/live/_meta", baseUrl));
@@ -70,5 +72,37 @@ export const listMCPTools = async (
       // ignore
     }
   }
+
+  createdTools["get-account-name"] = createTool({
+    id: "get-account-name",
+    description: "Gets the current thread account name",
+    inputSchema: z.object({
+      threadId: z.string(),
+    }),
+    outputSchema: z.object({
+      accountName: z.string().optional(),
+    }),
+    // deno-lint-ignore require-await
+    execute: async ({ context }) => {
+      return { accountName: accounts.get(context.threadId) };
+    },
+  });
+  createdTools["configure-account-name"] = createTool({
+    id: "configure-account-name",
+    description: "Configures the current thread account name",
+    inputSchema: z.object({
+      accountName: z.string(),
+      threadId: z.string(),
+    }),
+    outputSchema: z.object({
+      success: z.boolean(),
+    }),
+    // deno-lint-ignore require-await
+    execute: async ({ context }) => {
+      accounts.set(context.threadId, context.accountName);
+      return { success: true };
+    },
+  });
+
   return createdTools;
 };

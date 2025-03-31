@@ -1,5 +1,6 @@
 import { logger } from "@deco/deco/o11y";
 import type { AppContext } from "site/apps/site.ts";
+import { accounts } from "site/sdk/account.ts";
 import { getAssistant } from "site/sdk/assistants.ts";
 import type { Message, TextMessage } from "site/sdk/messages.ts";
 import { listMCPTools } from "site/sdk/tools.ts";
@@ -55,6 +56,9 @@ export default function stream(
   const messageWithContext = `
 Today is ${new Date().toUTCString()} UTC
 
+Current Thread Id: ${threadId}
+Current Account Name: ${accounts.get(threadId)}
+
 <old-messages>
 ${oldMessages}
 </old-messages>
@@ -74,6 +78,7 @@ ${message}
         system: ctx.globalContext,
         onError: ({ error }) => {
           logger.error(`Error streaming AI response: ${message}`, { error });
+          console.error(error);
         },
         // @ts-ignore ignore
         tools: await listMCPTools(ctx.mcpServerURL!),
@@ -85,6 +90,7 @@ ${message}
         logger.error(`Error streaming AI response: ${message}`, {
           error: part.error,
         });
+        console.error(part.error);
       }
 
       if (part.type === "text-delta") {

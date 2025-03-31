@@ -78,7 +78,9 @@ export default function Content({
             id="messages-container"
             class="w-full max-w-4xl mx-auto px-3 pb-3 space-y-2 overflow-y-auto"
           >
-            {messages.value.map((message) => <Message {...message} />)}
+            {messages.value.map((message) => (
+              <Message key={message.id} {...message} />
+            ))}
             {isAiThinking.value && (
               <LoadingMessage
                 username={assistant.title}
