@@ -81,6 +81,12 @@ ${message}
     );
 
     for await (const part of agentStream.fullStream) {
+      if (part.type === "error") {
+        logger.error(`Error streaming AI response: ${message}`, {
+          error: part.error,
+        });
+      }
+
       if (part.type === "text-delta") {
         yield {
           type: "text-delta" as const,
