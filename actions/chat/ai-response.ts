@@ -86,7 +86,7 @@ ${message}
       }
     }
 
-    return fullResponse;
+    return { message: fullResponse };
   } catch (error) {
     console.error(error);
     return `I apologize, but I encountered an error processing your request.`;
