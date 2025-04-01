@@ -63,8 +63,8 @@ export default function Home(
         <header class="flex flex-col gap-3.5">
           <div class="flex items-center gap-3.5">
             <Image
-              src="https://assets.decocache.com/vtex-agent/b7b071f7-62e1-4e42-bc7f-8397088dc9b4/Frame-2147223556.png"
-              width={113}
+              src="https://assets.decocache.com/vtex-agent/4999891d-e66a-47cf-8416-3d63e84f9959/logo-tommy-hilfiger-1024-(1).png"
+              width={130}
               height={42}
               alt="vtex logo"
             />

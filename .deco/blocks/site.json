@@ -16,10 +16,10 @@
     },
     {
       "__resolveType": "website/sections/Seo/SeoV2.tsx",
-      "title": "AI Agent for VTEX Stores",
+      "title": "Tommy Hilfiger AI Agent",
       "type": "website",
-      "image": "https://assets.decocache.com/vtex-agent/3b51bbbf-fa1e-489a-be3f-bb9601f2c90b/image-732-(1).png",
-      "favicon": "https://assets.decocache.com/vtex-agent/3b51bbbf-fa1e-489a-be3f-bb9601f2c90b/image-732-(1).png"
+      "image": "https://assets.decocache.com/vtex-agent/51c9fa0d-0b28-41c5-8d68-e83e6e9c8438/favicon.png",
+      "favicon": "https://assets.decocache.com/vtex-agent/51c9fa0d-0b28-41c5-8d68-e83e6e9c8438/favicon.png"
     }
   ],
   "routes": [
