@@ -13,6 +13,13 @@
   "global": [
     {
       "__resolveType": "htmx/sections/htmx.tsx"
+    },
+    {
+      "__resolveType": "website/sections/Seo/SeoV2.tsx",
+      "title": "AI Agent for VTEX Stores",
+      "type": "website",
+      "image": "https://assets.decocache.com/vtex-agent/3b51bbbf-fa1e-489a-be3f-bb9601f2c90b/image-732-(1).png",
+      "favicon": "https://assets.decocache.com/vtex-agent/3b51bbbf-fa1e-489a-be3f-bb9601f2c90b/image-732-(1).png"
     }
   ],
   "routes": [
