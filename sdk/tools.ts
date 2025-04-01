@@ -103,6 +103,26 @@ export const listMCPTools = async (
       return { success: true };
     },
   });
+  createdTools["get-account-by-url"] = createTool({
+    id: "get-account-by-url",
+    description: "Gets the account name by url",
+    inputSchema: z.object({
+      url: z.string(),
+    }),
+    outputSchema: z.object({
+      accountName: z.string(),
+    }),
+    // deno-lint-ignore require-await
+    execute: async ({ context }) => {
+      const repo = await fetch(new URL(`/api/catalog_system/pub/products/search?_from=0&_to=1`, context.url));
+      const result = await repo.json();
+      const accountName = result[0]?.brandImageUrl.split('//')[1].split('.')[0]
+      return { accountName: accountName };
+    },
+  });
 
+  for (const toolName in createdTools) {
+    console.log(`Tool name: ${toolName}`);
+  }
   return createdTools;
 };

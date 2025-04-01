@@ -91,3 +91,13 @@ export function getRecentThreadMessages() {
 
   return [];
 }
+
+export const localThreads = new Map<string, Message[]>();
+
+export function getLocalThread(threadId: string) {
+  return localThreads.get(threadId) || [];
+}
+
+export function setLocalThread(threadId: string, messages: Message[]) {
+  localThreads.set(threadId, messages);
+}

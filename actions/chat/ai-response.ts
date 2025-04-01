@@ -3,6 +3,7 @@ import type { AppContext } from "site/apps/site.ts";
 import { accounts } from "site/sdk/account.ts";
 import { getAssistant } from "site/sdk/assistants.ts";
 import type { Message, TextMessage } from "site/sdk/messages.ts";
+import { getLocalThread, setLocalThread } from "site/sdk/messages.ts";
 import { listMCPTools } from "site/sdk/tools.ts";
 
 export interface Props {
@@ -23,12 +24,16 @@ export default async function aiResponse(
     threadId = "default",
     resourceId = "default",
     assistantUrl,
-    threadMessages = [],
+    threadMessages: initialThreadMessages = [],
   } = props;
+
+  const threadMessages = initialThreadMessages.length > 0 
+    ? initialThreadMessages 
+    : getLocalThread(threadId);
 
   let assistant = getAssistant(assistantUrl, ctx);
   if (!assistant) {
-    assistant = getAssistant("/content-enricher", ctx);
+    assistant = getAssistant("/catalog-specialist", ctx);
   }
 
   if (!ctx.mcpServerURL) {
@@ -36,7 +41,7 @@ export default async function aiResponse(
     throw new Error("MCP server URL not found");
   }
 
-  if (!assistant.agent) {
+  if (!assistant?.agent) {
     logger.error("Assistant agent not found", props);
     throw new Error("Assistant agent not found");
   }
@@ -89,6 +94,21 @@ ${message}
           fullResponse += part.textDelta;
           break;
       }
+    }
+
+    const updatedMessages = [...threadMessages.slice(-7, -3)];
+    if (fullResponse) {
+      updatedMessages.push({
+        id: crypto.randomUUID(),
+        timestamp: new Date().toLocaleTimeString("pt-BR", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        role: "assistant",
+        content: fullResponse,
+        username: assistant.title,
+      });
+      setLocalThread(threadId, updatedMessages);
     }
 
     return { message: fullResponse };
