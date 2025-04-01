@@ -27,8 +27,8 @@ export default async function aiResponse(
     threadMessages: initialThreadMessages = [],
   } = props;
 
-  const threadMessages = initialThreadMessages.length > 0 
-    ? initialThreadMessages 
+  const threadMessages = initialThreadMessages.length > 0
+    ? initialThreadMessages
     : getLocalThread(threadId);
 
   let assistant = getAssistant(assistantUrl, ctx);

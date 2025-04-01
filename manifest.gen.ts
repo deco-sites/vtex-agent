@@ -6,12 +6,16 @@ import * as $$$$$$$$$0 from "./actions/chat/ai-response.ts";
 import * as $$$$$$$$$1 from "./actions/chat/stream-ai-response.ts";
 import * as $$$$$$$$$$$0 from "./apps/deco/htmx.ts";
 import * as $$$$$$$$$$$1 from "./apps/site.ts";
+import * as $$$0 from "./loaders/avaliableAssistants.ts";
 import * as $$$$$$0 from "./sections/Chat.tsx";
 import * as $$$$$$1 from "./sections/Component.tsx";
 import * as $$$$$$2 from "./sections/Home.tsx";
 import * as $$$$$$3 from "./sections/Theme/Theme.tsx";
 
 const manifest = {
+  "loaders": {
+    "site/loaders/avaliableAssistants.ts": $$$0,
+  },
   "sections": {
     "site/sections/Chat.tsx": $$$$$$0,
     "site/sections/Component.tsx": $$$$$$1,

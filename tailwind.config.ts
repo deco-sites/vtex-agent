@@ -14,9 +14,9 @@ export default {
       colors: {
         "primary": {
           darkest: "#940F3B",
-          dark: "#C6144F",
-          DEFAULT: "#F71963",
-          light: "#FFC4DD",
+          dark: "#000c2d",
+          DEFAULT: "#000c2d",
+          light: "#000c2d",
           lightest: "#FFF3F6",
         },
         "secondary": {
@@ -27,8 +27,8 @@ export default {
           lightest: "#F5F9FF",
         },
         "neutral": {
-          darkest: "#4A4D57",
-          dark: "#787C89",
+          darkest: "#000c2d",
+          dark: "#5a5c66",
           DEFAULT: "#C3C6CC",
           light: "#F1F1F5",
           lightest: "#FFFFFF",

@@ -47,7 +47,7 @@ export function loader(props: Props, req: Request, ctx: AppContext) {
   return {
     ...props,
     assistant,
-    assistants: ctx.assistants.map(({ agent: _agent, ...assistant }) =>
+    assistants: ctx.filteredAssistants.map(({ agent: _agent, ...assistant }) =>
       assistant
     ) as Assistant[],
     threadId: crypto.randomUUID(),
