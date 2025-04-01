@@ -1,6 +1,7 @@
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import { useSignal } from "@preact/signals";
 import type { TargetedEvent } from "preact/compat";
+import { useRef } from "preact/hooks";
 import Icon from "site/components/ui/Icon.tsx";
 import { invoke } from "site/runtime.ts";
 import type { Assistant } from "site/sdk/assistants.ts";
@@ -30,6 +31,7 @@ export default function Input({
   resourceId,
 }: Props) {
   const abortController = useSignal<AbortController | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   async function handleSubmit(event: TargetedEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,14 +49,16 @@ export default function Input({
       username: "You",
     });
 
-    const messagesContainer = document.getElementById("messages-container");
-    if (messagesContainer) {
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-
     event.currentTarget.reset();
 
     setAiThinking(true);
+
+    requestAnimationFrame(() => {
+      const loadingMessage = document.getElementById("loading-message");
+      if (loadingMessage) {
+        loadingMessage.scrollIntoView({ behavior: "smooth", inline: "end" });
+      }
+    });
 
     try {
       abortController.value = new AbortController();
@@ -163,17 +167,22 @@ export default function Input({
       });
     } finally {
       setAiThinking(false);
+      if (inputRef.current) {
+        inputRef.current.disabled = false;
+        inputRef.current.focus();
+      }
     }
   }
 
   return (
     <div class="relative w-full flex justify-center items-center">
       <button
+        disabled={!isAiThinking.value || !IS_BROWSER}
         class={clx(
           "text-primary bg-neutral-lightest rounded-full border border-primary-light absolute left-1/2 -translate-x-1/2",
           "flex items-center gap-2 p-2 pr-3 h-10 transition-all duration-300 ease-in-out",
-          isAiThinking.value && "opacity-100 -top-12",
-          !isAiThinking.value && "opacity-0 top-0",
+          isAiThinking.value && "opacity-100 -top-12 pointer-events-auto",
+          !isAiThinking.value && "opacity-0 top-0 pointer-events-none",
         )}
         onClick={() => {
           abortController.value?.abort();
@@ -188,9 +197,10 @@ export default function Input({
         onSubmit={handleSubmit}
         id="chat-form"
         autocomplete="off"
-        class="bg-neutral-lightest rounded-2xl border border-neutral-light max-w-[800px] w-full flex items-center gap-2 p-2"
+        class="bg-neutral-lightest rounded-2xl border border-neutral-light max-w-4xl w-full flex items-center gap-2 p-2"
       >
         <input
+          ref={inputRef}
           disabled={isAiThinking.value || !IS_BROWSER}
           name="message"
           id="chat-input"

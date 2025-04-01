@@ -28,7 +28,7 @@ export const listMCPTools = async (
 
   const createdTools: Record<string, ReturnType<typeof createTool>> = {};
   for (const tool of tools) {
-    if (tool.name.includes("website")) {
+    if (tool.name.includes("website") || tool.resolveType.includes("action")) {
       continue;
     }
 

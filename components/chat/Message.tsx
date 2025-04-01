@@ -19,7 +19,7 @@ export default function Message(props: Props) {
         <div class="flex justify-start">
           <div
             class={clx(
-              "max-w-[80%] md:max-w-[70%] rounded-lg p-2 text-sm",
+              "md:max-w-[70%] rounded-lg p-2 text-sm",
               "bg-white border border-gray-100 text-neutral-darkest",
               "flex items-center gap-3",
             )}
@@ -73,7 +73,7 @@ export default function Message(props: Props) {
       >
         <div
           class={clx(
-            "max-w-[80%] md:max-w-[70%] rounded-lg p-4 [--tw-prose-links:rgb(247_25_99_/_var(--tw-text-opacity))]",
+            "md:max-w-[70%] rounded-lg p-4 [--tw-prose-links:rgb(247_25_99_/_var(--tw-text-opacity))]",
             isUser
               ? "bg-neutral-darkest text-white"
               : "bg-white border border-gray-100 text-neutral-darkest",

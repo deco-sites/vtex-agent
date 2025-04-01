@@ -1,5 +1,6 @@
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { signal } from "@preact/signals";
+import { useSignal } from "@preact/signals";
+import { useEffect, useRef } from "preact/hooks";
 import LoadingMessage from "site/components/chat/LoadingMessage.tsx";
 import Message from "site/components/chat/Message.tsx";
 import Icon from "site/components/ui/Icon.tsx";
@@ -15,32 +16,37 @@ interface Props {
   suggestions: ChatSuggestion[];
 }
 
-const shouldAutoScroll = signal(true);
-
 export default function Content({
   assistant,
 }: Props) {
+  const autoScroll = useSignal(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      if (!container) return;
+
+      const isAtBottom = container.scrollHeight - container.scrollTop <=
+        container.clientHeight + 5;
+
+      autoScroll.value = isAtBottom; // Ativa o auto-scroll se o usuário estiver no final
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
   messages.subscribe(() => {
-    if (IS_BROWSER && shouldAutoScroll.value) {
-      const messagesContainer = document.getElementById("messages-container");
-      if (messagesContainer) {
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }
+    if (!IS_BROWSER || !autoScroll.value) return;
+
+    const loadingMessage = document.getElementById("loading-message");
+    if (loadingMessage) {
+      loadingMessage.scrollIntoView({ behavior: "smooth" });
     }
   });
-
-  if (IS_BROWSER) {
-    const messagesContainer = document.getElementById("messages-container");
-    if (messagesContainer) {
-      // Desativa o auto-scroll quando o usuário rola manualmente
-      messagesContainer.addEventListener("scroll", () => {
-        const isAtBottom =
-          messagesContainer.scrollHeight - messagesContainer.scrollTop <=
-            messagesContainer.clientHeight + 100;
-        shouldAutoScroll.value = isAtBottom;
-      });
-    }
-  }
 
   return (
     <>
@@ -75,8 +81,9 @@ export default function Content({
         )
         : (
           <div
+            ref={containerRef}
             id="messages-container"
-            class="w-full max-w-4xl mx-auto px-3 pb-3 space-y-2 overflow-y-auto"
+            class="w-full max-w-4xl mx-auto pb-3 pr-1 md:pr-3 space-y-2 overflow-y-auto"
           >
             {messages.value.map((message) => (
               <Message key={message.id} {...message} />
