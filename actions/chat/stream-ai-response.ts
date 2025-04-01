@@ -1,6 +1,5 @@
 import { logger } from "@deco/deco/o11y";
 import type { AppContext } from "site/apps/site.ts";
-import { accounts } from "site/sdk/account.ts";
 import { getAssistant } from "site/sdk/assistants.ts";
 import type { Message, TextMessage } from "site/sdk/messages.ts";
 import { listMCPTools } from "site/sdk/tools.ts";
@@ -31,6 +30,8 @@ export default function stream(
     threadMessages = [],
   } = props;
 
+  const accountName = ctx.accountName;
+
   const assistant = getAssistant(assistantUrl, ctx);
   if (!assistant) {
     logger.error("Assistant not found", props);
@@ -57,7 +58,7 @@ export default function stream(
 Today is ${new Date().toUTCString()} UTC
 
 Current Thread Id: ${threadId}
-Current Account Name: ${accounts.get(threadId)}
+Current Account Name: ${accountName}
 
 <old-messages>
 ${oldMessages}

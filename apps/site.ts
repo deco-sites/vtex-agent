@@ -19,6 +19,11 @@ interface Props extends WebsiteProps {
    * @title Omit Assistants
    */
   assistantsToOmit?: OmitAssistant[];
+  /**
+   * @title VTEX Account Name
+   * @description The account name for the assistants
+   */
+  accountName: string;
   anthropicApiKey?: Secret;
   /**
    * @title Global Context

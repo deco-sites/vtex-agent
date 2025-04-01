@@ -1,6 +1,5 @@
 import { logger } from "@deco/deco/o11y";
 import type { AppContext } from "site/apps/site.ts";
-import { accounts } from "site/sdk/account.ts";
 import { getAssistant } from "site/sdk/assistants.ts";
 import type { Message, TextMessage } from "site/sdk/messages.ts";
 import { getLocalThread, setLocalThread } from "site/sdk/messages.ts";
@@ -55,7 +54,7 @@ export default async function aiResponse(
   const messageWithContext = `Today is ${new Date().toUTCString()} UTC
 
 Current Thread Id: ${threadId}
-Current Account Name: ${accounts.get(threadId)}
+Current Account Name: ${ctx.accountName}
 
 <old-messages>
 ${oldMessages}
