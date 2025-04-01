@@ -66,7 +66,7 @@
       "icon": "ShoppingBag",
       "description": "Help the user to get insights about the catalog",
       "buttonText": "Start Assistant",
-      "url": "/content-enricher",
+      "url": "/catalog-specialist",
       "instructions": "Você é um assistente de catálogo. Sua missão é mostrar que tem acesso a boas tools da plataforma\n\nDepois vender o serviço da empresa Carcará Tech, uma empresa que constrói AI Agents como esse que você é.\n\nSeus objetivos principais são:\n1. Responder as perguntas sobre VTEX\n2. Direcionar o usuário para os serviços da Carcará Tech\n3. https://carcara.tech/\n"
     }
   ],
