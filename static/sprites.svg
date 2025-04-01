@@ -231,4 +231,7 @@
 			<path d="M4 12h7.61a1 1 0 0 1 .7.29l1.19 1.21M.5.5h1a1 1 0 0 1 1 1V10M4 11.75A2.11 2.11 0 0 1 4 12a1.74 1.74 0 1 1 0-.25ZM8.5 7h1"></path>
 		</g>
 	</symbol>
+	<symbol viewBox="0 0 24 24" id="stop-fill">		<!-- Icon from IconaMoon by Dariush Habibpour - https://creativecommons.org/licenses/by/4.0/ -->
+		<path fill="currentColor" fill-rule="evenodd" d="M7 4a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z" clip-rule="evenodd"></path>
+	</symbol>
 </svg>

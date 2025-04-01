@@ -43,7 +43,8 @@ export type AvailableIcons =
   | "Check"
   | "Home"
   | "vtex-ai-agent-studio"
-  | "cart-package";
+  | "cart-package"
+  | "stop-fill";
 
 interface Props extends JSX.SVGAttributes<SVGSVGElement> {
   /**

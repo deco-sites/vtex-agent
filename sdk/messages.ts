@@ -101,3 +101,8 @@ export function getLocalThread(threadId: string) {
 export function setLocalThread(threadId: string, messages: Message[]) {
   localThreads.set(threadId, messages);
 }
+
+export function deleteMessage(id: string) {
+  messages.value = messages.value.filter((message) => message.id !== id);
+  return messages.value;
+}
