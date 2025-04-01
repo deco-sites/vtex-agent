@@ -1,4 +1,5 @@
 import { SectionProps } from "@deco/deco";
+import { getCookies, setCookie } from "@std/http";
 import { AppContext } from "site/apps/site.ts";
 import Content from "site/components/chat/Content.tsx";
 import Input from "site/components/chat/Input.tsx";
@@ -44,14 +45,38 @@ export function loader(props: Props, req: Request, ctx: AppContext) {
     ...assistant
   } = getAssistant(req.url, ctx) as Assistant;
 
+  const cookies = getCookies(req.headers);
+
+  const threadIdKey = `threadId-${assistant.url.replaceAll("/", "-")}`;
+  const threadId = cookies[threadIdKey] || crypto.randomUUID();
+  const resourceId = cookies["resourceId"] || crypto.randomUUID();
+
+  if (!cookies[threadIdKey]) {
+    setCookie(ctx.response.headers, {
+      name: threadIdKey,
+      value: threadId,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+    });
+  }
+
+  if (!cookies["resourceId"]) {
+    setCookie(ctx.response.headers, {
+      name: "resourceId",
+      value: resourceId,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+    });
+  }
+
   return {
     ...props,
     assistant,
     assistants: ctx.assistants.map(({ agent: _agent, ...assistant }) =>
       assistant
     ) as Assistant[],
-    threadId: crypto.randomUUID(),
-    resourceId: "default",
+    threadId,
+    resourceId,
   };
 }
 
