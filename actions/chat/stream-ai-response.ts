@@ -4,6 +4,7 @@ import { accounts } from "site/sdk/account.ts";
 import { getAssistant } from "site/sdk/assistants.ts";
 import type { Message, TextMessage } from "site/sdk/messages.ts";
 import { listMCPTools } from "site/sdk/tools.ts";
+import { allowCorsFor } from "@deco/deco";
 
 export interface Props {
   assistantUrl: string;
@@ -20,9 +21,13 @@ interface StreamResponse {
 
 export default function stream(
   props: Props,
-  _req: Request,
+  req: Request,
   ctx: AppContext,
 ): AsyncIterableIterator<StreamResponse> {
+  // Allow Cors
+  Object.entries(allowCorsFor(req)).map(([name, value]) => {
+    ctx.response.headers.set(name, value);
+  });
   const {
     message,
     threadId = "default",
