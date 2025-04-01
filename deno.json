@@ -5,6 +5,7 @@
     "@cliffy/prompt": "jsr:@cliffy/prompt@^1.0.0-rc.5",
     "@core/asyncutil": "jsr:@core/asyncutil@^1.0.2",
     "@deco/codemod-toolkit": "jsr:@deco/codemod-toolkit@0.3.4",
+    "@deco/deno-ast-wasm": "jsr:@deco/deno-ast-wasm@^0.5.4",
     "@deco/durable": "jsr:@deco/durable@0.5.3",
     "@deco/mcp": "jsr:@deco/mcp@^0.1.12",
     "@deco/warp": "jsr:@deco/warp@0.3.8",
@@ -81,6 +82,10 @@
       "tags": [
         "fresh",
         "recommended"
+      ],
+      "exclude": [
+        "jsx-button-has-type",
+        "react-no-danger"
       ]
     }
   },
