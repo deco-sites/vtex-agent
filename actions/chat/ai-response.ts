@@ -103,7 +103,7 @@ ${message}
       }
     }
 
-    const updatedMessages = [...threadMessages.slice(-10)];
+    const updatedMessages = [...threadMessages.slice(-4)];
     if (fullResponse) {
       updatedMessages.push({
         id: crypto.randomUUID(),

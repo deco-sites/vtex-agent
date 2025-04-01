@@ -86,7 +86,7 @@ export function getRecentThreadMessages() {
   );
 
   if (allMessages.length >= 2) {
-    return allMessages.slice(-11, -1);
+    return allMessages.slice(-4, -1);
   }
 
   return [];
