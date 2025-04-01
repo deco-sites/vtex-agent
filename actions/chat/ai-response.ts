@@ -5,6 +5,7 @@ import { getAssistant } from "site/sdk/assistants.ts";
 import type { Message, TextMessage } from "site/sdk/messages.ts";
 import { getLocalThread, setLocalThread } from "site/sdk/messages.ts";
 import { listMCPTools } from "site/sdk/tools.ts";
+import { allowCorsFor } from "@deco/deco";
 
 export interface Props {
   assistantUrl: string;
@@ -16,9 +17,15 @@ export interface Props {
 
 export default async function aiResponse(
   props: Props,
-  _req: Request,
+  req: Request,
   ctx: AppContext,
 ) {
+
+  // Allow Cors
+  Object.entries(allowCorsFor(req)).map(([name, value]) => {
+    ctx.response.headers.set(name, value);
+  });
+
   const {
     message,
     threadId = "default",
