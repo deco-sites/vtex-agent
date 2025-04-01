@@ -121,8 +121,5 @@ export const listMCPTools = async (
     },
   });
 
-  for (const toolName in createdTools) {
-    console.log(`Tool name: ${toolName}`);
-  }
   return createdTools;
 };
