@@ -2,6 +2,7 @@ import { Schemas } from "@deco/deco";
 import { getTools } from "@deco/mcp";
 import { createTool } from "@mastra/core/tools";
 import { jsonSchemaToModel } from "@mastra/core/utils";
+import { logger } from "@deco/deco/o11y";
 import { z } from "npm:zod@3.24.2";
 import { accounts } from "site/sdk/account.ts";
 
@@ -110,14 +111,40 @@ export const listMCPTools = async (
       url: z.string(),
     }),
     outputSchema: z.object({
-      accountName: z.string(),
+      accountName: z.string().optional(),
+      error: z.string().optional(),
     }),
-    // deno-lint-ignore require-await
     execute: async ({ context }) => {
-      const repo = await fetch(new URL(`/api/catalog_system/pub/products/search?_from=0&_to=1`, context.url));
-      const result = await repo.json();
-      const accountName = result[0]?.brandImageUrl.split('//')[1].split('.')[0]
-      return { accountName: accountName };
+      try {
+        const baseUrl = context.url.startsWith("https://")
+          ? context.url
+          : `https://${context.url}`;
+        const repo = await fetch(
+          new URL(
+            "/api/catalog_system/pub/products/search?_from=0&_to=1",
+            baseUrl,
+          ),
+        );
+        const result = await repo.json();
+
+        const brandImageUrl = result[0]?.brandImageUrl as string | undefined;
+        const imageUrl = result[0]?.items[0]?.images[0]?.imageUrl as
+          | string
+          | undefined;
+
+        const accountName = (brandImageUrl || imageUrl)
+          ?.split("//")[1]
+          ?.split(".")[0] as string | undefined;
+
+        return { accountName: accountName };
+      } catch (error) {
+        logger.error(`Error getting account name: ${context.url}`, { error });
+        console.error(error);
+        return {
+          accountName: undefined,
+          error: error instanceof Error ? error.message : "Unknown error",
+        };
+      }
     },
   });
 
