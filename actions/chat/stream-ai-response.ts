@@ -1,10 +1,10 @@
+import { allowCorsFor } from "@deco/deco";
 import { logger } from "@deco/deco/o11y";
 import type { AppContext } from "site/apps/site.ts";
 import { accounts } from "site/sdk/account.ts";
 import { getAssistant } from "site/sdk/assistants.ts";
 import type { Message, TextMessage } from "site/sdk/messages.ts";
 import { listMCPTools } from "site/sdk/tools.ts";
-import { allowCorsFor } from "@deco/deco";
 
 export interface Props {
   assistantUrl: string;
@@ -15,7 +15,7 @@ export interface Props {
 }
 
 interface StreamResponse {
-  type: "text-delta" | "tool-call" | "tool-result";
+  type: "text-delta" | "tool-call" | "tool-result" | "error";
   content: string;
 }
 
@@ -96,6 +96,12 @@ ${message}
           error: part.error,
         });
         console.error(part.error);
+        yield {
+          type: "error" as const,
+          content: part.error instanceof Error
+            ? part.error.message
+            : "An error occurred while streaming the AI response",
+        };
       }
 
       if (part.type === "text-delta") {
