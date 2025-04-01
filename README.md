@@ -1,4 +1,4 @@
-# Start — deco.cx template 
+# Start — deco.cx template  
 
 Welcome to your [deco.cx](https://deco.cx) site!
 
