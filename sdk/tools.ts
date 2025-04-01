@@ -112,11 +112,15 @@ export const listMCPTools = async (
     outputSchema: z.object({
       accountName: z.string(),
     }),
-    // deno-lint-ignore require-await
     execute: async ({ context }) => {
-      const repo = await fetch(new URL(`/api/catalog_system/pub/products/search?_from=0&_to=1`, context.url));
+      const repo = await fetch(
+        new URL(
+          `/api/catalog_system/pub/products/search?_from=0&_to=1`,
+          context.url,
+        ),
+      );
       const result = await repo.json();
-      const accountName = result[0]?.brandImageUrl.split('//')[1].split('.')[0]
+      const accountName = result[0]?.brandImageUrl.split("//")[1].split(".")[0];
       return { accountName: accountName };
     },
   });

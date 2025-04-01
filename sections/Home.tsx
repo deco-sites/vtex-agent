@@ -36,7 +36,7 @@ interface Props {
 export function loader(props: Props, _req: Request, ctx: AppContext) {
   return {
     ...props,
-    assistants: ctx.assistants as Assistant[],
+    assistants: ctx.filteredAssistants as Assistant[],
   };
 }
 

@@ -25,6 +25,22 @@ export default defineApp(async (_req, ctx) => {
           dangerouslySetInnerHTML={{
             __html: `
     /* SuisseBP */
+
+     @font-face {
+      font-family: "Futura Std";
+      src: url(${asset("/Futura-Bold.woff2")}) format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Futura Std";
+      src: url(${asset("/Futura-Normal.woff2")}) format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
     
     @font-face {
       font-family: "VTEX Trust";

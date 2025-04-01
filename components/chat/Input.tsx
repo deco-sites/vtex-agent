@@ -28,8 +28,10 @@ export default function Input({
   resourceId,
 }: Props) {
   async function handleSubmit(event: TargetedEvent<HTMLFormElement>) {
+    // @ts-ignore Trust me, I'm an expert
     event.preventDefault();
 
+    // @ts-ignore Trust me, I'm an expert
     const formData = new FormData(event.target as HTMLFormElement);
     const message = formData.get("message") as string;
 

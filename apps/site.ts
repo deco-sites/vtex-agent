@@ -15,6 +15,10 @@ interface Props extends WebsiteProps {
    */
   mcpServerURL?: string;
   assistants: Assistant[];
+  /**
+   * @title Omit Assistants
+   */
+  assistantsToOmit?: OmitAssistant[];
   anthropicApiKey?: Secret;
   /**
    * @title Global Context
@@ -24,8 +28,21 @@ interface Props extends WebsiteProps {
   globalContext?: string;
 }
 
+/**
+ * @titleBy url
+ */
+interface OmitAssistant {
+  /**
+   * @title URL do assistente
+   * @format dynamic-options
+   * @options site/loaders/avaliableAssistants.ts
+   */
+  url: string;
+}
+
 interface State extends Props {
   assistants: AssistantWithAgent[];
+  filteredAssistants: AssistantWithAgent[];
 }
 
 /**
@@ -55,7 +72,13 @@ export default function Site(props: Props): App<Manifest, State, [
       : undefined,
   }));
 
-  const state = { ...props, assistants };
+  const filteredAssistants = assistants.filter((assistant) => {
+    return !props.assistantsToOmit?.some((assistantToOmit) =>
+      assistantToOmit.url === assistant.url
+    );
+  });
+
+  const state = { ...props, assistants, filteredAssistants };
 
   return {
     // @ts-ignore ignore type error
