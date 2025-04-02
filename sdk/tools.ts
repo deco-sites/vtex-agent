@@ -4,7 +4,7 @@ import { createTool } from "@mastra/core/tools";
 import { jsonSchemaToModel } from "@mastra/core/utils";
 import { logger } from "@deco/deco/o11y";
 import { z } from "npm:zod@3.24.2";
-import { accounts } from "site/sdk/account.ts";
+import { accounts, urls } from "site/sdk/account.ts";
 
 export const fetchMeta = async (baseUrl: string) => {
   const response = await fetch(new URL("/live/_meta", baseUrl));
@@ -44,7 +44,7 @@ export const listMCPTools = async (
           },
         ),
         execute: async ({ context }) => {
-          console.log({ context });
+
           const response = await fetch(
             new URL(`/live/invoke/${tool.resolveType}`, baseUrl),
             {
@@ -74,6 +74,25 @@ export const listMCPTools = async (
     }
   }
 
+  createdTools["get-buy-product-url"] = createTool({
+    id: "get-buy-product-url",
+    description: "Returns the URL of that send the user directly to the cart with the product added.",
+    inputSchema: z.object({
+      productId: z.string(),
+    }),
+    outputSchema: z.object({
+      url: z.string().optional(),
+    }),
+    // deno-lint-ignore require-await
+    execute: async ({ context }) => {
+      const url = urls.get(context.threadId);
+      if (!url) {
+        return { url: undefined };
+      }
+      return { url: `${url}/checkout/cart/add?sku=${context.productId}&qty=1&seller=1` };
+    },
+  });
+
   createdTools["get-account-name"] = createTool({
     id: "get-account-name",
     description: "Gets the current thread account name",
@@ -102,6 +121,35 @@ export const listMCPTools = async (
     execute: async ({ context }) => {
       accounts.set(context.threadId, context.accountName);
       return { success: true };
+    },
+  });
+  createdTools["configure-account-url"] = createTool({
+    id: "configure-account-url",
+    description: "Configures the current thread account url",
+    inputSchema: z.object({
+      url: z.string(),
+    }),
+    outputSchema: z.object({
+      success: z.boolean(),
+    }),
+    // deno-lint-ignore require-await
+    execute: async ({ context }) => {
+      urls.set(context.threadId, context.url);
+      return { success: true };
+    },
+  });
+  createdTools["get-account-url"] = createTool({
+    id: "get-account-url",
+    description: "Gets the current thread account url",
+    inputSchema: z.object({
+      threadId: z.string(),
+    }),
+    outputSchema: z.object({
+      url: z.string().optional(),
+    }),
+    // deno-lint-ignore require-await
+    execute: async ({ context }) => {
+      return { url: urls.get(context.threadId) };
     },
   });
   createdTools["get-account-by-url"] = createTool({
