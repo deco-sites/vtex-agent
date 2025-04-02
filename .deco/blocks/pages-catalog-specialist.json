@@ -1,28 +1,30 @@
 {
-    "name": "Catalog Specialist",
-    "path": "/catalog-specialist",
-    "sections": [
-      {
-        "__resolveType": "site/sections/Chat.tsx",
-        "title": "Catalog Specialist",
-        "icon": "ArrowsPointingOut",
-        "iconColor": "#f91880",
-        "pageTitle": "Start chatting with Catalog Specialist",
-        "pageSubtitle": "Enhance your product descriptions and SEO content",
-        "backUrl": "/",
-        "suggestions": [
-          {
-            "text": "Write an SEO-optimized product description"
-          },
-          {
-            "text": "Suggest improvements for my existing descriptions"
-          },
-          {
-            "text": "Create a content strategy for my new product line"
-          }
-        ]
-      }
-    ],
-    "__resolveType": "website/pages/Page.tsx"
+  "name": "Catalog Specialist",
+  "path": "/catalog-specialist",
+  "sections": [
+    {
+      "__resolveType": "site/sections/Chat.tsx",
+      "title": "Catalog Specialist",
+      "icon": "ArrowsPointingOut",
+      "iconColor": "#f91880",
+      "pageTitle": "Start chatting with Catalog Specialist",
+      "pageSubtitle": "Enhance your product descriptions and SEO content",
+      "backUrl": "/",
+      "suggestions": [
+        {
+          "text": "Write an SEO-optimized product description"
+        },
+        {
+          "text": "Suggest improvements for my existing descriptions"
+        },
+        {
+          "text": "Create a content strategy for my new product line"
+        }
+      ]
+    }
+  ],
+  "__resolveType": "website/pages/Page.tsx",
+  "seo": {
+    "__resolveType": "website/sections/Seo/SeoV2.tsx"
   }
-  
+}
